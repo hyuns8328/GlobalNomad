@@ -1,10 +1,13 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-branch=$(git symbolic-ref --short HEAD)
+branch="$(git branch --show-current)"
 
-echo "$branch" | grep -Eq '^(feat|fix|docs|style|refactor|test|chore)/#?[0-9]+-'
-
-if [ $? -ne 0 ]; then
-  echo "❌ 브랜치명이 규칙을 따르지 않습니다."
+if [[ ! "$branch" =~ ^(main|dev|feat/.+)$ ]]; then
+  echo "❌ invalid branch name: $branch"
+  echo ""
+  echo "허용 브랜치:"
+  echo "- main"
+  echo "- dev"
+  echo "- feat/*"
   exit 1
 fi
