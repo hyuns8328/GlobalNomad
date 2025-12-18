@@ -1,4 +1,6 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
+branch="$(git branch --show-current)"
 
-pnpm lint-staged
+if [ "$branch" = "main" ]; then
+  echo "❌ main 브랜치에서는 직접 커밋 불가 (PR 사용)"
+  exit 1
+fi
